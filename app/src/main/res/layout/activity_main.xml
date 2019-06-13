@@ -23,12 +23,14 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
     <Button
             android:id="@+id/btn_alarm"
+            android:visibility="gone"
             android:layout_marginTop="50dp"
             android:text="定时器的练习_alarm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     <Button
             android:id="@+id/btn_timer"
+            android:visibility="gone"
             android:layout_marginTop="100dp"
             android:text="定时器的练习_timer"
             android:layout_width="match_parent"

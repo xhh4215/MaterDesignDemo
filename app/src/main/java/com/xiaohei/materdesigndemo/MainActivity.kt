@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
@@ -42,12 +44,33 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    /***
+     * 加载菜单文件
+     */
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.toolbar, menu)
+        return true
+    }
 
+    /***
+     * 菜单项点击的处理处理事件
+     */
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item!!.itemId) {
+            R.id.backup -> Toast.makeText(MainActivity@ this, "You Click BackUp", Toast.LENGTH_LONG).show()
+            R.id.delect -> Toast.makeText(MainActivity@ this, "You Click Delect", Toast.LENGTH_LONG).show()
+            R.id.setting -> Toast.makeText(MainActivity@ this, "You CLick Setting", Toast.LENGTH_LONG).show()
+
+
+        }
+
+        return true
+    }
 }
 
 class MyTimerTask : TimerTask() {
     override fun run() {
-       Log.d("TAG",""+System.currentTimeMillis())
+        Log.d("TAG", "" + System.currentTimeMillis())
     }
 
 
