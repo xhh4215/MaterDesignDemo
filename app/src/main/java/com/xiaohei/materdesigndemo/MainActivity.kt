@@ -11,14 +11,33 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.ActionBar
+import androidx.core.view.GravityCompat
+import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.selector
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         setSupportActionBar(toolbar)
+        val actionBar: ActionBar = supportActionBar as ActionBar
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true)
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu)
+        }
+        nav_view.setCheckedItem(R.id.nav_call)
+        /***
+         * 传入的lambda是 {MenuItem -> Boolean}
+         */
+        nav_view.setNavigationItemSelectedListener { menuItem ->
+            menuItem.isChecked
+            drawer_layout.closeDrawers()
+            true
+        }
         btn_alarm.setOnClickListener {
             Toast.makeText(MainActivity@ this, "点击定时器按钮", Toast.LENGTH_LONG).show()
             //获取定时器对象   kotlin 中使用as  进行强制类型转化
@@ -57,13 +76,15 @@ class MainActivity : AppCompatActivity() {
      */
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item!!.itemId) {
-            R.id.backup -> Toast.makeText(MainActivity@ this, "You Click BackUp", Toast.LENGTH_LONG).show()
-            R.id.delect -> Toast.makeText(MainActivity@ this, "You Click Delect", Toast.LENGTH_LONG).show()
-            R.id.setting -> Toast.makeText(MainActivity@ this, "You CLick Setting", Toast.LENGTH_LONG).show()
-
-
+            R.id.backup ->
+                Toast.makeText(MainActivity@ this, "You Click BackUp", Toast.LENGTH_LONG).show()
+            R.id.delect ->
+                Toast.makeText(MainActivity@ this, "You Click Delect", Toast.LENGTH_LONG).show()
+            R.id.setting ->
+                Toast.makeText(MainActivity@ this, "You CLick Setting", Toast.LENGTH_LONG).show()
+            android.R.id.home ->
+                drawer_layout.openDrawer(GravityCompat.START)
         }
-
         return true
     }
 }
