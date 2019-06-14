@@ -10,9 +10,11 @@ import android.os.SystemClock
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.core.view.GravityCompat
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
@@ -59,9 +61,15 @@ class MainActivity : AppCompatActivity() {
             timer.schedule(MyTimerTask(), 3000, 3000)
         }
         fab.setOnClickListener {
-            Toast.makeText(MainActivity@this,"你点击了浮动按钮",Toast.LENGTH_LONG).show()
-        }
+            Snackbar.make(fab,"snacker",Snackbar.LENGTH_SHORT)
+                .setAction("Undo",object:View.OnClickListener{
+                    override fun onClick(v: View?) {
+                        Toast.makeText(applicationContext,"Data restored",Toast.LENGTH_LONG).show()
+                    }
 
+                })
+                .show()
+        }
     }
 
     /***
