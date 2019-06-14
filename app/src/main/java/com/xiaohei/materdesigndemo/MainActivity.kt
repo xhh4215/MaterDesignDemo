@@ -14,21 +14,40 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.core.view.GravityCompat
+import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
+    private var fruit: Array<Fruit> = arrayOf(
+        Fruit("Apple", R.drawable.apple),
+        Fruit("Banana", R.drawable.banana),
+        Fruit("Orange", R.drawable.orange),
+        Fruit("Watermelon", R.drawable.watermelon),
+        Fruit("Pear", R.drawable.pear),
+        Fruit("Mango", R.drawable.mango),
+        Fruit("Strawberry", R.drawable.strawberry),
+        Fruit("Cherry", R.drawable.cherry),
+        Fruit("Pineapple", R.drawable.pineapple),
+        Fruit("Grape", R.drawable.grape)
+    )
+    private var fruitlist = ArrayList<Fruit>()
+    private lateinit var adapter: FruitAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         setSupportActionBar(toolbar)
         val actionBar: ActionBar = supportActionBar as ActionBar
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true)
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu)
         }
+        initFruit()
+        recycler_view.layoutManager = GridLayoutManager(MainActivity@ this, 2)
+        adapter = FruitAdapter(fruitlist, this)
+        recycler_view.adapter = adapter
         nav_view.setCheckedItem(R.id.nav_call)
         /***
          * 传入的lambda是 {MenuItem -> Boolean}
@@ -61,14 +80,22 @@ class MainActivity : AppCompatActivity() {
             timer.schedule(MyTimerTask(), 3000, 3000)
         }
         fab.setOnClickListener {
-            Snackbar.make(fab,"snacker",Snackbar.LENGTH_SHORT)
-                .setAction("Undo",object:View.OnClickListener{
+            Snackbar.make(fab, "snacker", Snackbar.LENGTH_SHORT)
+                .setAction("Undo", object : View.OnClickListener {
                     override fun onClick(v: View?) {
-                        Toast.makeText(applicationContext,"Data restored",Toast.LENGTH_LONG).show()
+                        Toast.makeText(applicationContext, "Data restored", Toast.LENGTH_LONG).show()
                     }
 
                 })
                 .show()
+        }
+    }
+
+    fun initFruit() {
+        fruitlist.clear()
+        for (i in 0..9) {
+          fruitlist.add(fruit.get(i))
+
         }
     }
 
